@@ -36,7 +36,7 @@
 					<label for="receiveName">Username</label>
 					<p ng-model="receiveName">{{receiveName}}</p>
 					<div class="well chatbox" id="pmHistory">
-					<ul class="list-unstyled">
+					<ul class="list-unstyled" style="width: 210px; height: 200px; overflow: auto">
 						<li ng-repeat="pmObj in currentPmHistory">{{pmObj.sender}} - {{pmObj.message}}</li>
 					</ul>
 					</div>
@@ -46,10 +46,6 @@
 
 					<textarea rows="4" cols="29" id="privateMsg" name="privateMsg" ng-model="privateMsg">
 					</textarea>
-				</div>
-				<div class="alert-success" ng-cloak ng-show="successMessage != ''">
-					{{successMessage}}
-
 				</div>
 
 				<div>

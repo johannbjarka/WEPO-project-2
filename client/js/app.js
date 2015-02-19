@@ -3,6 +3,7 @@ var ChatClient = angular.module('ChatClient', ['ngRoute']);
 ChatClient.config(
 	function ($routeProvider) {
 		$routeProvider
+			.when('', { templateUrl: '', controller: 'HomeController'})
 			.when('/login', { templateUrl: 'Views/login.html', controller: 'LoginController' })
 			.when('/rooms/:user/', { templateUrl: 'Views/rooms.html', controller: 'RoomsController' })
 			.when('/room/:user/:room/', { templateUrl: 'Views/room.html', controller: 'RoomController' })
@@ -11,6 +12,15 @@ ChatClient.config(
 			});
 	}
 );
+
+ChatClient.controller('HomeController', function($scope, $location, socket) {
+	$scope.disconnecting = function(){
+		socket.emit('disconnect2', function(){
+			$location.path('/login');
+			console.log("hallo")
+		});
+	}
+});
 
 ChatClient.controller('LoginController', function ($scope, $location, $rootScope, $routeParams, socket) {
 	
@@ -30,6 +40,7 @@ ChatClient.controller('LoginController', function ($scope, $location, $rootScope
 			});			
 		}
 	};
+
 });
 
 ChatClient.controller('RoomsController', function ($scope, $location, $rootScope, $routeParams, socket) {
@@ -83,8 +94,6 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 
 	socket.on('updateusers', function (roomName, users, ops) {
 		if(roomName === $scope.currentRoom) {
-			console.log(users);
-			console.log(roomName);
 			$scope.currentUsers = users;
 		}
 	});		
@@ -125,7 +134,6 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 		else {
 			socket.emit('privatemsg', { nick: $scope.receiveName, message: $scope.privateMsg }, function (success) {
 				if(success) {
-					$scope.successMessage = 'PM successfully sent';
 					var pmObj = {
 						sender : $scope.currentUser,
 						message : $scope.privateMsg,

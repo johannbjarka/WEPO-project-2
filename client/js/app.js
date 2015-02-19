@@ -78,6 +78,8 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	$scope.privateMsg = '';
 	$scope.receivedMsg = '';
 	$scope.PMsender = '';
+	$scope.pmHistory = [];
+	$scope.currentPmHistory = [];
 
 	socket.on('updateusers', function (roomName, users, ops) {
 		if(roomName === $scope.currentRoom) {
@@ -100,6 +102,10 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
         $location.path('/rooms/' + $scope.currentUser);
 	};
 
+	$scope.hidePMchat = function() {
+		$scope.receiveName = '';
+	}
+
 	socket.on('updatechat', function (roomName, msgHistory) {
 		$scope.messages = msgHistory;
 	});
@@ -113,9 +119,6 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	};
 
 	$scope.sendPM = function () {
-		if($scope.receiveName === '') {
-			$scope.pmErrorMessage = 'You must specify a username';
-		}
 		if($scope.privateMsg === '') {
 			//$scope.errorMessage = 'Message can not be blank';
 		}
@@ -123,16 +126,57 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 			socket.emit('privatemsg', { nick: $scope.receiveName, message: $scope.privateMsg }, function (success) {
 				if(success) {
 					$scope.successMessage = 'PM successfully sent';
+					var pmObj = {
+						sender : $scope.currentUser,
+						message : $scope.privateMsg,
+						receiver : $scope.receiveName
+					};
+					$scope.pmHistory.push(pmObj);
+					showPM();
 				} else {
 					$scope.pmErrorMessage = 'Failed to send PM';
-				}
-			});
+				}		
+			});	
 		}
 	};
 
+	$scope.pmToUser = function(user){
+		if($scope.currentUser !== user){
+			$scope.receiveName = user;
+			$scope.currentPmHistory = [];
+			for(var i = 0; i < $scope.pmHistory.length; i++)
+			{
+				if(($scope.currentUser === $scope.pmHistory[i].sender && $scope.receiveName === $scope.pmHistory[i].receiver) || 
+					($scope.currentUser === $scope.pmHistory[i].receiver && $scope.receiveName === $scope.pmHistory[i].sender))
+				{
+					$scope.currentPmHistory.push($scope.pmHistory[i]);
+				}
+			}
+		}
+
+	};
+
+	showPM = function(){
+			$scope.currentPmHistory = [];
+			for(var i = 0; i < $scope.pmHistory.length; i++)
+			{
+				if(($scope.currentUser === $scope.pmHistory[i].sender && $scope.receiveName === $scope.pmHistory[i].receiver) || 
+					($scope.currentUser === $scope.pmHistory[i].receiver && $scope.receiveName === $scope.pmHistory[i].sender))
+				{
+					$scope.currentPmHistory.push($scope.pmHistory[i]);
+				}
+			}
+
+	};
+
 	socket.on('recv_privatemsg', function(username, message) {
-		$scope.PMsender = username;
-		$scope.receivedMsg = message;
+			var pmObj = {
+						sender : username,
+						message : message,
+						receiver : $scope.currentUser
+					};
+			$scope.pmHistory.push(pmObj);
+			showPM();
 	});
 
 	$scope.kickUser = function (user) {

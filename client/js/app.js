@@ -100,6 +100,10 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
         $location.path('/rooms/' + $scope.currentUser);
 	};
 
+	$scope.hidePMchat = function() {
+		$scope.receiveName = '';
+	}
+
 	socket.on('updatechat', function (roomName, msgHistory) {
 		$scope.messages = msgHistory;
 	});
@@ -138,9 +142,6 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 		if($scope.currentUser !== user){
 			$scope.receiveName = user;
 			$scope.currentPmHistory = [];
-			console.log($scope.currentUser);
-			console.log($scope.pmHistory[0]);
-			console.log(user);
 			for(var i = 0; i < $scope.pmHistory.length; i++)
 			{
 				if(($scope.currentUser === $scope.pmHistory[i].sender && $scope.receiveName === $scope.pmHistory[i].receiver) || 
@@ -149,14 +150,12 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 					$scope.currentPmHistory.push($scope.pmHistory[i]);
 				}
 			}
-			console.log($scope.currentPmHistory);
 		}
 
 	};
 
 	showPM = function(){
 			$scope.currentPmHistory = [];
-			console.log("hallo");
 			for(var i = 0; i < $scope.pmHistory.length; i++)
 			{
 				if(($scope.currentUser === $scope.pmHistory[i].sender && $scope.receiveName === $scope.pmHistory[i].receiver) || 
@@ -165,8 +164,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 					$scope.currentPmHistory.push($scope.pmHistory[i]);
 				}
 			}
-			console.log("hallo");
-			console.log($scope.pmHistory);
+
 	};
 
 	socket.on('recv_privatemsg', function(username, message) {
@@ -176,7 +174,6 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 						receiver : $scope.currentUser
 					};
 			$scope.pmHistory.push(pmObj);
-			console.log($scope.pmHistory);
 			showPM();
 	});
 });

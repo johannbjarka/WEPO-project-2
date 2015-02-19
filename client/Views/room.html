@@ -56,7 +56,11 @@
 	<h4>Users in this room</h4>
 	<div class="well">	
 		<ul>
-			<li ng-repeat="user in currentUsers">{{user}}</li>
+			<li ng-repeat="user in currentUsers">
+			{{user}}
+			<button type="button" class="btn btn-primary" ng-click="kickUser(user)">Kick</button>
+			<button type="button" class="btn btn-primary" ng-click="banUser(user)">Ban</button>
+			</li>
 		</ul>
 	</div>
 </div>

@@ -90,7 +90,9 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	socket.emit('joinroom', { room: $scope.currentRoom }, function (success, reason) {
 		if (!success) {
 			$scope.errorMessage = reason;
-		}
+			// send user back to rooms
+			$location.path('/rooms/' + $scope.currentUser);
+		} 
 	});
 
 	$scope.leaveRoom = function () {
@@ -132,4 +134,39 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 		$scope.PMsender = username;
 		$scope.receivedMsg = message;
 	});
+
+	$scope.kickUser = function (user) {
+		socket.emit('kick', { room: $scope.currentRoom , user: user }, function (success) {
+			// if success: use toastr to notify room that user was kicked 
+		});
+	};
+
+	socket.on('kicked', function(room, user, username) {
+		// use toastr to notify user he was kicked
+		// reroute user that was kicked to rooms
+		// notify chat that a user was kicked
+		if($scope.currentUser === user) {
+			$location.path('/rooms/' + $scope.currentUser);
+		}
+	});
+
+	$scope.banUser = function (user) {
+		socket.emit('ban', { room: $scope.currentRoom , user: user }, function (success) {
+			console.log(user);
+			// if success: use toastr to notify user was kicked 
+		});
+	};
+
+	socket.on('banned', function(room, user, username) {
+		// use toastr to notify user he was banned
+		//	 reroute user that was kicked to rooms
+		// notify chat that a user was banned
+		if($scope.currentUser === user) {
+			$location.path('/rooms/' + $scope.currentUser);
+		}
+	});
+});
+
+ChatClient.filter('removeCurrentUser', function () {
+	//
 });

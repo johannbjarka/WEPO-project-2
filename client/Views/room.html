@@ -58,13 +58,23 @@
 </div>
 <div class="col-md-3">
 	<h4>Users in this room</h4>
-	<div class="well">	
-		<ul>
-			<li ng-repeat="user in currentUsers">
-			<button ng:click="pmToUser(user)" >{{user}}</button>
-			<button type="button" class="btn btn-primary" ng-click="kickUser(user)">Kick</button>
-			<button type="button" class="btn btn-primary" ng-click="banUser(user)">Ban</button>
-			</li>
-		</ul>
+	<div class="well">
+		<div class="row">
+			<div class="col-md-4">
+				<ul class="list-unstyled">
+					<li ng-repeat="user in currentUsers">
+						<button ng:click="pmToUser(user)" >{{user}}</button>
+					</li>
+				</ul>
+			</div>
+			<div class="col-md-8">
+				<ul class="list-unstyled">
+					<li ng-repeat="user in currentUsers | kickBanForOps">
+						<button type="button" class="btn btn-primary" ng-click="kickUser(user)">Kick</button>
+						<button type="button" class="btn btn-primary" ng-click="banUser(user)">Ban</button>
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </div>

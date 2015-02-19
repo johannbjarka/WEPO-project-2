@@ -219,6 +219,33 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	});
 });
 
-ChatClient.filter('removeCurrentUser', function () {
-	//
+ChatClient.filter('removeCurrentUser', function ($routeParams) {
+	var user = $routeParams.user;
+	return function (items) {
+		var filtered = [];
+		for(var i in items) {
+			if(i !== user) {
+				filtered.push(i);
+			}
+		}
+		return filtered;
+	};
+});
+
+ChatClient.filter('kickBanForOps', function($routeParams, socket) {
+	var ops2 = {};
+	var user = $routeParams.user;
+	var room = $routeParams.room;
+
+	socket.on('updateusers', function (roomName, users, ops) {
+		if(roomName === room) {
+			ops2 = ops;
+		};
+	});	
+	
+	return function (items) {
+		if(ops2[user] !== undefined) {
+			return items;
+		}
+	};
 });

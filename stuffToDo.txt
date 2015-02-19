@@ -2,9 +2,10 @@ Stuff to do:
 
 Það sem þarf að gera:
 
-1. Birta private message history.
+x 1. Birta private message history.
 2. Útfæra kick og ban virkni.
 	2.1 Nota toastr til að láta notanda vita að honum hafi verið kickað / hann bannaður.
+x	2.2. Sýna bara kick og ban takka ef notandi er op í viðkomandi herbergi.
 3. Nota moment.js til að birta timestamp í spjallglugga.
 	3.1 Cleara alla input glugga þegar búið er að senda e-ð inn.
 4. Útfæra disconnect virkni.
@@ -14,7 +15,8 @@ Stuff to do:
 
 Það sem væri töff að gera:
 
-1. Gera nýtt view fyrir að skoða/senda private message eða sjá 2.
-2. Geta smellt á notendur á notendalista til að senda PM, showa / hida PM glugga á room síðunni.
-3. Hida villu- successskilaboð eftir ákveðinn tíma. 
-4. Gera síðuna flottari.
+x 1. Gera nýtt view fyrir að skoða/senda private message eða sjá 2.
+x 2. Geta smellt á notendur á notendalista til að senda PM, showa / hida PM glugga á room síðunni.
+x 3. Hida villu- successskilaboð eftir ákveðinn tíma. 
+x 4. Setja scrollbar á PM og chatglugga
+5. Gera síðuna flottari.

@@ -34,7 +34,7 @@
 
 				<div class="form-group">
 					<label for="receiveName">Username</label>
-					<input type="text" class="form-control" id="receiveName" name="receiveName" ng-model="receiveName" />
+					<p ng-model="receiveName">{{receiveName}}</p>
 					<label for="privateMsg">Message</label>
 					<textarea rows="4" cols="29" id="privateMsg" name="privateMsg" ng-model="privateMsg">
 					</textarea>
@@ -46,7 +46,9 @@
 
 
 				<div class="well chatbox" id="pmHistory">
-					{{PMsender}} - {{receivedMsg}}
+					<ul class="list-unstyled">
+						<li ng-repeat="pmObj in currentPmHistory">{{pmObj.sender}} - {{pmObj.message}}</li>
+					</ul>
 				</div>
 			</div>
 	</div>
@@ -56,7 +58,9 @@
 	<h4>Users in this room</h4>
 	<div class="well">	
 		<ul>
-			<li ng-repeat="user in currentUsers">{{user}}</li>
+			<li ng:repeat="user in currentUsers">
+	      		<button ng:click="pmToUser(user)" >{{user}}</button>
+	 		</li>
 		</ul>
 	</div>
 </div>

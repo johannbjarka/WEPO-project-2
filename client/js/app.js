@@ -135,6 +135,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 		} else {
 			socket.emit('sendmsg', { roomName: $scope.currentRoom, msg: $scope.newMessage });
 		}
+		$scope.newMessage ='';
 	};
 
 	$scope.sendPM = function () {
@@ -151,9 +152,12 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 					};
 					$scope.pmHistory.push(pmObj);
 					showPM();
+					
 				} else {
 					$scope.pmErrorMessage = 'Failed to send PM';
-				}		
+					
+				}	
+				$scope.privateMsg ='';	
 			});	
 		}
 	};
@@ -194,7 +198,10 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 						receiver : $scope.currentUser
 					};
 			$scope.pmHistory.push(pmObj);
-			$scope.PMsender = username;
+			if($scope.receiveName === '')
+			{
+				$scope.PMsender = username;
+			}
 			showPM();
 
 	});

@@ -193,7 +193,10 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 						receiver : $scope.currentUser
 					};
 			$scope.pmHistory.push(pmObj);
-			$scope.PMsender = username;
+			if($scope.receiveName === '')
+			{
+				$scope.PMsender = username;
+			}
 			showPM();
 
 	});

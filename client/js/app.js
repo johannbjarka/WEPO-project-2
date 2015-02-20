@@ -117,6 +117,9 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	}
 
 	socket.on('updatechat', function (roomName, msgHistory) {
+		for(var i = 0; i < msgHistory.length; i++) {
+			msgHistory[i].timestamp = formatTimestamp(msgHistory[i].timestamp);
+		};
 		$scope.messages = msgHistory;
 	});
 
@@ -230,6 +233,10 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 
 	toasterBan = function () {
 		toaster.pop('error', "Attention!", "You have been banned from the room");
+	};
+
+	formatTimestamp = function (ts) {
+		return moment(ts).format('HH:mm');
 	};
 });
 

@@ -3,7 +3,7 @@ var ChatClient = angular.module('ChatClient', ['ngRoute', 'ngAnimate', 'toaster'
 ChatClient.config(
 	function ($routeProvider) {
 		$routeProvider
-			.when('/', { templateUrl: 'index.html', controller: 'HomeController'})
+			.when('/', { templateUrl: 'Views/navigation.html', controller: 'NavigationController'})
 			.when('/login', { templateUrl: 'Views/login.html', controller: 'LoginController' })
 			.when('/rooms/:user/', { templateUrl: 'Views/rooms.html', controller: 'RoomsController' })
 			.when('/room/:user/:room/', { templateUrl: 'Views/room.html', controller: 'RoomController' })
@@ -13,13 +13,14 @@ ChatClient.config(
 	}
 );
 
-ChatClient.controller('HomeController', function ($scope, $location, socket) {
-	$scope.disconnecting = function(){
-		socket.emit('disconnect2', function(){
-			$location.path('/login');
-			
+ChatClient.controller('NavigationController', function ($scope, $location, $rootScope, $routeParams, socket) {
+	$scope.disconnecting = function () {
+		socket.emit('disconnect2', function () {
+
 		});
-		console.log("hallo");
+		//console.log("hallo");
+		$location.path('/login');
+
 	}
 });
 
@@ -152,7 +153,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 		}
 	};
 
-	$scope.pmToUser = function(user){
+	$scope.pmToUser = function(user) {
 		if($scope.currentUser !== user){
 			$scope.receiveName = user;
 			$scope.currentPmHistory = [];
@@ -168,7 +169,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 
 	};
 
-	showPM = function(){
+	showPM = function() {
 			$scope.currentPmHistory = [];
 			for(var i = 0; i < $scope.pmHistory.length; i++)
 			{
@@ -193,7 +194,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 
 	});
 
-	$scope.pmRecevied = function(PMsender){
+	$scope.pmRecevied = function (PMsender) {
 		$scope.pmToUser(PMsender);
 		$scope.PMsender = '';
 	}
@@ -205,6 +206,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	};
 
 	socket.on('kicked', function(room, user, username) {
+
 		// notify chat that a user was kicked
 		if($scope.currentUser === user) {
 			$location.path('/rooms/' + $scope.currentUser);

@@ -3,7 +3,7 @@ var ChatClient = angular.module('ChatClient', ['ngRoute']);
 ChatClient.config(
 	function ($routeProvider) {
 		$routeProvider
-			.when('', { templateUrl: '', controller: 'HomeController'})
+			.when('/', { templateUrl: 'index.html', controller: 'HomeController'})
 			.when('/login', { templateUrl: 'Views/login.html', controller: 'LoginController' })
 			.when('/rooms/:user/', { templateUrl: 'Views/rooms.html', controller: 'RoomsController' })
 			.when('/room/:user/:room/', { templateUrl: 'Views/room.html', controller: 'RoomController' })
@@ -13,12 +13,13 @@ ChatClient.config(
 	}
 );
 
-ChatClient.controller('HomeController', function($scope, $location, socket) {
+ChatClient.controller('HomeController', function ($scope, $location, socket) {
 	$scope.disconnecting = function(){
 		socket.emit('disconnect2', function(){
 			$location.path('/login');
-			console.log("hallo")
+			
 		});
+		console.log("hallo");
 	}
 });
 
@@ -184,8 +185,15 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 						receiver : $scope.currentUser
 					};
 			$scope.pmHistory.push(pmObj);
+			$scope.PMsender = username;
 			showPM();
+
 	});
+
+	$scope.pmRecevied = function(PMsender){
+		$scope.pmToUser(PMsender);
+		$scope.PMsender = '';
+	}
 
 	$scope.kickUser = function (user) {
 		socket.emit('kick', { room: $scope.currentRoom , user: user }, function (success) {

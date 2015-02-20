@@ -1,4 +1,4 @@
-var ChatClient = angular.module('ChatClient', ['ngRoute']);
+var ChatClient = angular.module('ChatClient', ['ngRoute', 'ngAnimate', 'toaster']);
 
 ChatClient.config(
 	function ($routeProvider) {
@@ -78,7 +78,7 @@ ChatClient.controller('RoomsController', function ($scope, $location, $rootScope
 	loadRooms();
 });
 
-ChatClient.controller('RoomController', function ($scope, $location, $rootScope, $routeParams, socket) {
+ChatClient.controller('RoomController', function ($scope, $location, $rootScope, $routeParams, socket, toaster) {
 	$scope.currentRoom = $routeParams.room;
 	$scope.currentUser = $routeParams.user;
 	$scope.currentUsers = [];
@@ -202,12 +202,12 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 		});
 	};
 
-	socket.on('kicked', function (room, user, username) {
-		// use toastr to notify user he was kicked
-		// reroute user that was kicked to rooms
+	socket.on('kicked', function(room, user, username) {
+
 		// notify chat that a user was kicked
 		if($scope.currentUser === user) {
 			$location.path('/rooms/' + $scope.currentUser);
+			toasterKicked();
 		}
 	});
 
@@ -219,13 +219,20 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	};
 
 	socket.on('banned', function(room, user, username) {
-		// use toastr to notify user he was banned
-		//	 reroute user that was kicked to rooms
 		// notify chat that a user was banned
 		if($scope.currentUser === user) {
 			$location.path('/rooms/' + $scope.currentUser);
+			toasterBan();
 		}
 	});
+
+	toasterKicked = function () {
+		toaster.pop('error', "Attention!", "You were kicked from the room");
+	};
+
+	toasterBan = function () {
+		toaster.pop('error', "Attention!", "You have been banned from the room");
+	};
 });
 
 ChatClient.filter('removeCurrentUser', function ($routeParams) {

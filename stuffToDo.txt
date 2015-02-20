@@ -2,9 +2,10 @@ Stuff to do:
 
 Það sem þarf að gera:
 
-x 1. Birta private message history.
-2. Útfæra kick og ban virkni.
-	2.1 Nota toastr til að láta notanda vita að honum hafi verið kickað / hann bannaður.
+x  1. Birta private message history.
+x	1.1 Birta icon við hliðina á þeim user sem sendi þér skilaboð.
+x  2. Útfæra kick og ban virkni.
+x	2.1 Nota toastr til að láta notanda vita að honum hafi verið kickað / hann bannaður.
 x	2.2. Sýna bara kick og ban takka ef notandi er op í viðkomandi herbergi.
 3. Nota moment.js til að birta timestamp í spjallglugga.
 	3.1 Cleara alla input glugga þegar búið er að senda e-ð inn.

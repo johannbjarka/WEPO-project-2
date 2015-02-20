@@ -10,10 +10,11 @@ x	2.2. Sýna bara kick og ban takka ef notandi er op í viðkomandi herbergi.
 x  3. Nota moment.js til að birta timestamp í spjallglugga.
 x  4. Útfæra disconnect virkni.
 5. Senda msg á room að user hafi disconnectað, hafi verið kickað, bannaður, leavað, joinað.
-6. Cleara texta úr input eftir að búið er að senda.
-7. Setja hvern component í sér fæl, nota síðan grunt task til að concatenate og minifia.
-8. Setja allt sem þarf í bower.json.
-9. Runna jshint með grunt og fara í gegn án warning.
+6. Tékka á bögg með ops, reyna að finna fleiri bugs.
+x  7. Cleara texta úr input eftir að búið er að senda.
+8. Setja hvern component í sér fæl, nota síðan grunt task til að concatenate og minifia.
+9. Setja allt sem þarf í bower.json.
+10. Runna jshint með grunt og fara í gegn án warning.
 
 Það sem væri töff að gera:
 

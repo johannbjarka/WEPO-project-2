@@ -118,10 +118,15 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	}
 
 	socket.on('updatechat', function (roomName, msgHistory) {
-		for(var i = 0; i < msgHistory.length; i++) {
-			msgHistory[i].timestamp = formatTimestamp(msgHistory[i].timestamp);
+		if(roomName === $scope.currentRoom) {
+			for(var i = 0; i < msgHistory.length; i++) {
+				// Check if we already formatted the timestamp.
+				if(msgHistory[i].timestamp.length > 10) {
+					msgHistory[i].timestamp = formatTimestamp(msgHistory[i].timestamp);
+				}
+			};
+			$scope.messages = msgHistory;
 		};
-		$scope.messages = msgHistory;
 	});
 
 	$scope.sendMessage = function () {

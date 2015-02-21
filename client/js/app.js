@@ -93,10 +93,14 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	$scope.PMsender = '';
 	$scope.pmHistory = [];
 	$scope.currentPmHistory = [];
+	$scope.currentOp = '';
 
 	socket.on('updateusers', function (roomName, users, ops) {
 		if(roomName === $scope.currentRoom) {
 			$scope.currentUsers = users;
+			if(ops[$scope.currentUser] !== undefined) {
+				$scope.currentOp = $scope.currentUser;
+			}
 		}
 	});		
 
@@ -218,9 +222,8 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	};
 
 	socket.on('kicked', function(room, user, username) {
-
 		// notify chat that a user was kicked
-		if($scope.currentUser === user) {
+		if($scope.currentUser === user && $scope.currentRoom === room) {
 			$location.path('/rooms/' + $scope.currentUser);
 			toasterKicked();
 		}
@@ -235,11 +238,16 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 
 	socket.on('banned', function(room, user, username) {
 		// notify chat that a user was banned
-		if($scope.currentUser === user) {
+		if($scope.currentUser === user && $scope.currentRoom === room) {
 			$location.path('/rooms/' + $scope.currentUser);
 			toasterBan();
 		}
 	});
+
+	/*$scope.$on('destroy', function () {
+		console.log("YOLO");
+		socket.getSocket().removeAllListeners();
+	});*/
 
 	toasterKicked = function () {
 		toaster.pop('error', "Attention!", "You were kicked from the room");
@@ -264,23 +272,5 @@ ChatClient.filter('removeCurrentUser', function ($routeParams) {
 			}
 		}
 		return filtered;
-	};
-});
-
-ChatClient.filter('kickBanForOps', function($routeParams, socket) {
-	var ops2 = {};
-	var user = $routeParams.user;
-	var room = $routeParams.room;
-
-	socket.on('updateusers', function (roomName, users, ops) {
-		if(roomName === room) {
-			ops2 = ops;
-		};
-	});	
-	
-	return function (items) {
-		if(ops2[user] !== undefined) {
-			return items;
-		}
 	};
 });

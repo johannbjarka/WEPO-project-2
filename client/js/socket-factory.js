@@ -21,6 +21,9 @@ ChatClient.factory('socket', function ($rootScope) {
                     }
                 });
             })
+        },
+        getSocket: function() {
+            return socket;
         }
     };
 });

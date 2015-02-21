@@ -56,19 +56,19 @@
 			<button type ="button" class="btn btn-primary" ng-click="pmRecevied(PMsender)">{{PMsender}}</button>
 			<p>Just sent you a private message</p>
 	</div>
-	<h4>Users in this room</h4>
+	<h4>Other users in this room</h4>
 	<div class="well">
 		<div class="row">
 			<div class="col-md-4">
 				<ul class="list-unstyled">
-					<li ng-repeat="user in currentUsers">
+					<li ng-repeat="user in currentUsers | removeCurrentUser">
 						<button class="btn btn-link" ng:click="pmToUser(user)" >{{user}}</button>
 					</li>
 				</ul>
 			</div>
 			<div class="col-md-8">
 				<ul class="list-unstyled">
-					<li ng-repeat="user in currentUsers | kickBanForOps">
+					<li ng-repeat="user in currentUsers | removeCurrentUser" ng-cloak ng-show="currentOp != ''">
 						<button type="button" class="btn btn-primary" ng-click="kickUser(user)">Kick</button>
 						<button type="button" class="btn btn-primary" ng-click="banUser(user)">Ban</button>
 					</li>

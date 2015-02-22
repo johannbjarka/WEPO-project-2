@@ -1,4 +1,4 @@
-var ChatClient = angular.module('ChatClient', ['ngRoute', 'ngAnimate', 'toaster']);
+var ChatClient = angular.module('ChatClient', ['ngRoute', 'ngAnimate', 'toastr']);
 
 ChatClient.config(
 	function ($routeProvider) {
@@ -12,6 +12,33 @@ ChatClient.config(
 			});
 	}
 );
+
+ChatClient.config(function(toastrConfig) {
+  angular.extend(toastrConfig, {
+    allowHtml: false,
+    closeButton: false,
+    closeHtml: '<button>&times;</button>',
+    containerId: 'toast-container',
+    extendedTimeOut: 1000,
+    iconClasses: {
+      error: 'toast-error',
+      info: 'toast-info',
+      success: 'toast-success',
+      warning: 'toast-warning'
+    },
+    maxOpened: 1,
+    messageClass: 'toast-message',
+    newestOnTop: true,
+    onHidden: null,
+    onShown: null,
+    positionClass: 'toast-top-right',
+    tapToDismiss: true,
+    target: 'body',
+    timeOut: 5000,
+    titleClass: 'toast-title',
+    toastClass: 'toast'
+  });
+});
 
 ChatClient.controller('NavigationController', function ($scope, $location, $rootScope, $routeParams, socket) {
 	$scope.disconnecting = function () {
@@ -78,7 +105,7 @@ ChatClient.controller('RoomsController', function ($scope, $location, $rootScope
 	loadRooms();
 });
 
-ChatClient.controller('RoomController', function ($scope, $location, $rootScope, $routeParams, socket, toaster) {
+ChatClient.controller('RoomController', function ($scope, $location, $rootScope, $routeParams, socket, toastr) {
 	$scope.currentRoom = $routeParams.room;
 	$scope.currentUser = $routeParams.user;
 	$scope.currentUsers = [];
@@ -106,6 +133,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 
 	socket.emit('joinroom', { room: $scope.currentRoom }, function (success, reason) {
 		if (!success) {
+			// TODO notify why user can't join room
 			$scope.errorMessage = reason;
 			// send user back to rooms
 			$location.path('/rooms/' + $scope.currentUser);
@@ -225,7 +253,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 		// notify chat that a user was kicked
 		if($scope.currentUser === user && $scope.currentRoom === room) {
 			$location.path('/rooms/' + $scope.currentUser);
-			toasterKicked();
+			toastr.error('You were kicked from the room', 'Attention!');
 		}
 	});
 
@@ -240,22 +268,15 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 		// notify chat that a user was banned
 		if($scope.currentUser === user && $scope.currentRoom === room) {
 			$location.path('/rooms/' + $scope.currentUser);
-			toasterBan();
+			toastr.error('You\'ve been banned from the room', 'Attention!');
 		}
 	});
 
-	/*$scope.$on('destroy', function () {
+	$scope.$on('destroy', function () {
 		console.log("YOLO");
-		socket.getSocket().removeAllListeners();
-	});*/
-
-	toasterKicked = function () {
-		toaster.pop('error', "Attention!", "You were kicked from the room");
-	};
-
-	toasterBan = function () {
-		toaster.pop('error', "Attention!", "You have been banned from the room");
-	};
+		//socket.getSocket().removeAllListeners();
+		socket.getSocket().removeListener('kicked');
+	});
 
 	formatTimestamp = function (ts) {
 		return moment(ts).format('HH:mm');

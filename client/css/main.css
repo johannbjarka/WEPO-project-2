@@ -1,3 +1,24 @@
 .navfloat {
 	float: right;
 }
+
+.backgroundchat {
+	background-image: url("back.png");
+    
+}
+.body {
+	background-image: url("back.png");
+    background-color: #cccccc; 
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	color: white;
+}
+
+p {
+	color: white;
+}

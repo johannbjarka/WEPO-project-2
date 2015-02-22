@@ -62,7 +62,7 @@
 			<div class="col-md-4">
 				<ul class="list-unstyled">
 					<li ng-repeat="user in currentUsers | removeCurrentUser">
-						<button class="btn btn-link" ng:click="pmToUser(user)" >{{user}}</button>
+						<span class ="glyphicon glyphicon-user btn-lg"><button type="button" class="btn btn-default" ng:click="pmToUser(user)" >{{user}}</button></span>
 					</li>
 				</ul>
 			</div>

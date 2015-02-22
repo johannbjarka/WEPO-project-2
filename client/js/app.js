@@ -13,31 +13,32 @@ ChatClient.config(
 	}
 );
 
-ChatClient.config(function(toastrConfig) {
-  angular.extend(toastrConfig, {
-    allowHtml: false,
-    closeButton: false,
-    closeHtml: '<button>&times;</button>',
-    containerId: 'toast-container',
-    extendedTimeOut: 1000,
-    iconClasses: {
-      error: 'toast-error',
-      info: 'toast-info',
-      success: 'toast-success',
-      warning: 'toast-warning'
-    },
-    maxOpened: 1,
-    messageClass: 'toast-message',
-    newestOnTop: true,
-    onHidden: null,
-    onShown: null,
-    positionClass: 'toast-top-right',
-    tapToDismiss: true,
-    target: 'body',
-    timeOut: 5000,
-    titleClass: 'toast-title',
-    toastClass: 'toast'
-  });
+ChatClient.config(
+	function (toastrConfig) {
+  		angular.extend(toastrConfig, {
+		    allowHtml: false,
+		    closeButton: false,
+		    closeHtml: '<button>&times;</button>',
+		    containerId: 'toast-container',
+		    extendedTimeOut: 1000,
+		    iconClasses: {
+				error: 'toast-error',
+				info: 'toast-info',
+				success: 'toast-success',
+				warning: 'toast-warning'
+		    },
+		    maxOpened: 1,
+		    messageClass: 'toast-message',
+		    newestOnTop: true,
+		    onHidden: null,
+		    onShown: null,
+		    positionClass: 'toast-top-right',
+		    tapToDismiss: true,
+		    target: 'body',
+		    timeOut: 5000,
+		    titleClass: 'toast-title',
+		    toastClass: 'toast'
+  		});
 });
 
 ChatClient.controller('NavigationController', function ($scope, $location, $rootScope, $routeParams, socket) {
@@ -45,9 +46,7 @@ ChatClient.controller('NavigationController', function ($scope, $location, $root
 		socket.emit('disconnect2', function () {
 
 		});
-		//console.log("hallo");
 		$location.path('/login');
-
 	}
 });
 
@@ -137,13 +136,27 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 			$scope.errorMessage = reason;
 			// send user back to rooms
 			$location.path('/rooms/' + $scope.currentUser);
-		} 
+		}
+	});
+
+	socket.on('servermessage', function (value, room, user) {
+		if(value === 'join') {
+			var message = 'has joined the room.'
+			//socket.emit('sendmsg', { roomName: room, msg: message });
+		}
 	});
 
 	$scope.leaveRoom = function () {
 		socket.emit('partroom', $scope.currentRoom);
         $location.path('/rooms/' + $scope.currentUser);
 	};
+
+	socket.on('servermessage', function (value, room, user) {
+		if(value === 'part') {
+			var message = 'has left the room.'
+			//socket.emit('sendmsg', { roomName: room, msg: message });
+		}
+	});
 
 	$scope.hidePMchat = function() {
 		$scope.receiveName = '';
@@ -235,7 +248,6 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 				$scope.PMsender = username;
 			}
 			showPM();
-
 	});
 
 	$scope.pmRecevied = function (PMsender) {
@@ -250,11 +262,12 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	};
 
 	socket.on('kicked', function(room, user, username) {
-		// notify chat that a user was kicked
 		if($scope.currentUser === user && $scope.currentRoom === room) {
 			$location.path('/rooms/' + $scope.currentUser);
 			toastr.error('You were kicked from the room', 'Attention!');
 		}
+		var message = 'kicked ' + user + ' from the room.'
+		//socket.emit('sendmsg', { roomName: room, msg: message });
 	});
 
 	$scope.banUser = function (user) {

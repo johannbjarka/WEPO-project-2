@@ -13,34 +13,6 @@ ChatClient.config(
 	}
 );
 
-ChatClient.config(
-	function (toastrConfig) {
-  		angular.extend(toastrConfig, {
-		    allowHtml: false,
-		    closeButton: false,
-		    closeHtml: '<button>&times;</button>',
-		    containerId: 'toast-container',
-		    extendedTimeOut: 1000,
-		    iconClasses: {
-				error: 'toast-error',
-				info: 'toast-info',
-				success: 'toast-success',
-				warning: 'toast-warning'
-		    },
-		    maxOpened: 1,
-		    messageClass: 'toast-message',
-		    newestOnTop: true,
-		    onHidden: null,
-		    onShown: null,
-		    positionClass: 'toast-top-right',
-		    tapToDismiss: true,
-		    target: 'body',
-		    timeOut: 5000,
-		    titleClass: 'toast-title',
-		    toastClass: 'toast'
-  		});
-});
-
 ChatClient.controller('NavigationController', function ($scope, $location, $rootScope, $routeParams, socket) {
 	$scope.disconnecting = function () {
 		socket.emit('disconnect2', function () {
@@ -124,6 +96,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	socket.on('updateusers', function (roomName, users, ops) {
 		if(roomName === $scope.currentRoom) {
 			$scope.currentUsers = users;
+			// Check if current user is an op so we can show op controls in the HTML
 			if(ops[$scope.currentUser] !== undefined) {
 				$scope.currentOp = $scope.currentUser;
 			}
@@ -132,17 +105,18 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 
 	socket.emit('joinroom', { room: $scope.currentRoom }, function (success, reason) {
 		if (!success) {
-			// TODO notify why user can't join room
-			$scope.errorMessage = reason;
+			if(reason === 'banned') {
+				toastr.error('You have been banned from this room', 'Attention!');
+			}
 			// send user back to rooms
 			$location.path('/rooms/' + $scope.currentUser);
 		}
 	});
 
 	socket.on('servermessage', function (value, room, user) {
-		if(value === 'join') {
+		if(value === 'join' && $scope.currentUser === user) {
 			var message = 'has joined the room.'
-			//socket.emit('sendmsg', { roomName: room, msg: message });
+			socket.emit('sendmsg', { roomName: room, msg: message });
 		}
 	});
 
@@ -152,9 +126,9 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	};
 
 	socket.on('servermessage', function (value, room, user) {
-		if(value === 'part') {
+		if(value === 'part' && $scope.currentUser === user) {
 			var message = 'has left the room.'
-			//socket.emit('sendmsg', { roomName: room, msg: message });
+			socket.emit('sendmsg', { roomName: room, msg: message });
 		}
 	});
 
@@ -257,7 +231,6 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 
 	$scope.kickUser = function (user) {
 		socket.emit('kick', { room: $scope.currentRoom , user: user }, function (success) {
-			// if success: use toastr to notify room that user was kicked 
 		});
 	};
 
@@ -266,29 +239,30 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 			$location.path('/rooms/' + $scope.currentUser);
 			toastr.error('You were kicked from the room', 'Attention!');
 		}
-		var message = 'kicked ' + user + ' from the room.'
-		//socket.emit('sendmsg', { roomName: room, msg: message });
+		if($scope.currentUser === username) {
+			var message = 'kicked ' + user + ' from the room.'
+			socket.emit('sendmsg', { roomName: room, msg: message });
+		}
 	});
 
 	$scope.banUser = function (user) {
 		socket.emit('ban', { room: $scope.currentRoom , user: user }, function (success) {
-			console.log(user);
-			// if success: use toastr to notify user was kicked 
 		});
 	};
 
 	socket.on('banned', function(room, user, username) {
-		// notify chat that a user was banned
 		if($scope.currentUser === user && $scope.currentRoom === room) {
 			$location.path('/rooms/' + $scope.currentUser);
 			toastr.error('You\'ve been banned from the room', 'Attention!');
 		}
+		if($scope.currentUser === username) {
+			var message = 'banned ' + user + ' from the room.'
+			socket.emit('sendmsg', { roomName: room, msg: message });
+		}
 	});
 
-	$scope.$on('destroy', function () {
-		console.log("YOLO");
-		//socket.getSocket().removeAllListeners();
-		socket.getSocket().removeListener('kicked');
+	$scope.$on('$destroy', function () {
+		socket.getSocket().removeAllListeners();
 	});
 
 	formatTimestamp = function (ts) {

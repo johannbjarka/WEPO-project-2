@@ -105,7 +105,7 @@ textarea {
   z-index: 1000;
   display: none;
   float: left;
-  min-width: 52px;
+  min-width: 48px;
   padding: 5px 0;
   margin: 2px 0 0;
   font-size: 14px;

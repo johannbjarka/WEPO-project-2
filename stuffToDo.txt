@@ -9,9 +9,10 @@ x	2.1 Nota toastr til að láta notanda vita að honum hafi verið kickað / han
 x	2.2. Sýna bara kick og ban takka ef notandi er op í viðkomandi herbergi.
 x  3. Nota moment.js til að birta timestamp í spjallglugga.
 x  4. Útfæra disconnect virkni.
-5. Senda msg á room að user hafi disconnectað, hafi verið kickað, bannaður, leavað, joinað.
+x  5. Senda msg á room að user hafi disconnectað, hafi verið kickað, bannaður, leavað, joinað.
+	5.1 Virkar, nema fyrir leave.
 x  6. Tékka á bögg með ops
-	6.1 Laga bögg með að mörg toast birtast, reyna að finna fleiri bugs.
+x	6.1 Laga bögg með að mörg toast birtast, reyna að finna fleiri bugs.
 x  7. Cleara texta úr input eftir að búið er að senda.
 8. Setja hvern component í sér fæl, nota síðan grunt task til að concatenate og minifia.
 9. Setja allt sem þarf í bower.json.

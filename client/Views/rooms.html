@@ -1,25 +1,29 @@
 <h3>Hi {{currentUser}} - Active chat rooms</h3>
-<div class="row">
-	<div class="col-md-4">
-		<div class="panel panel-default">
-			<div class="panel-heading">Create new chatroom</div>
-				<div class="panel-body">
-					<div class="alert alert-danger" ng-cloak ng-show="errorMessage != ''">
-						{{errorMessage}}
-					</div>
+<div class="col-md-12">
+	<div class="well col-md-5">
+		<ul ng-repeat="room in rooms">
+			<li class ="glyphicon glyphicon-share-alt therooms"><a href="#/room/{{currentUser}}/{{room}}">{{room}}</a></li>
+		</ul>
+	</div>
+	<div class="col-md-3">
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">Create new chatroom</div>
+					<div class="panel-body">
+						<div class="alert alert-danger" ng-cloak ng-show="errorMessage != ''">
+							{{errorMessage}}
+						</div>
 
-					<div class="form-group">
-						<input type="text" class="form-control" id="roomName" name="roomName" ng-model="roomName" />
-					</div>
+						<div class="form-group">
+							<input type="text" class="form-control" id="roomName" name="roomName" ng-model="roomName" />
+						</div>
 
-					<button type="button" class="btn btn-primary" ng-click="newRoom()">Create new chatroom</button>
+						<button type="button" class="btn btn-default" ng-click="newRoom()">Create new chatroom</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<div class="well col-md-4">
-	<ul ng-repeat="room in rooms">
-		<li><a href="#/room/{{currentUser}}/{{room}}">{{room}}</a></li>
-	</ul>
 </div>

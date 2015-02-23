@@ -19,6 +19,104 @@ h5 {
 	color: white;
 }
 
-p {
-	color: white;
+.therooms a {
+	text-decoration: none;
+	font-size: 23px;
+}
+
+.therooms:hover a,
+.therooms:focus a,  
+.therooms:active a {
+	text-decoration: none;
+	font-size: 23px;
+	color: #23527c;
+	text-decoration: none;
+	background-color: rgb(208,204,208);
+}
+
+.menupad {
+	margin-bottom: 25px;
+}
+
+.topPad{
+	margin-top: 5px;
+}
+
+.chatroom {
+    width: 510Px;
+	height: 550px;
+	overflow: auto;
+	
+}
+
+.privatemsg {
+	width: 210Px;
+	height: 280px;
+	overflow: auto;
+}
+
+.btn-link {
+  font-weight: bold;
+  color: #337ab7;
+  border-radius: 0;
+  font-size: 400 px;
+}
+
+.btn-link,
+.btn-link:active,
+.btn-link.active,
+.btn-link[disabled],
+fieldset[disabled] .btn-link {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+.btn-link,
+.btn-link:hover,
+.btn-link:focus,
+.btn-link:active {
+  border-color: transparent;
+}
+.btn-link:hover,
+.btn-link:focus {
+  color: #23527c;
+  text-decoration: none;
+  background-color: rgb(208,204,208);
+}
+.btn-link[disabled]:hover,
+fieldset[disabled] .btn-link:hover,
+.btn-link[disabled]:focus,
+fieldset[disabled] .btn-link:focus {
+  color: #777;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+textarea {
+   resize: none;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 52px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  font-size: 14px;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, .15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 }

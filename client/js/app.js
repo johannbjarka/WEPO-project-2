@@ -45,9 +45,7 @@ ChatClient.controller('NavigationController', function ($scope, $location, $root
 		socket.emit('disconnect2', function () {
 
 		});
-		//console.log("hallo");
 		$location.path('/login');
-
 	}
 });
 

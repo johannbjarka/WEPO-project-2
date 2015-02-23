@@ -133,7 +133,6 @@ io.sockets.on('connection', function (socket) {
 		}
 		fn(false);
 	});
-
 	//When a user leaves a room this gets performed.
 	socket.on('partroom', function (room) {
 		//remove the user from the room roster and room op roster.

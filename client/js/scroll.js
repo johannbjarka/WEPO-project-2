@@ -1,3 +1,3 @@
-$("button#scroll").click(function() {
-	console.log("fuck off");
+$("#scroll").click(function() {
+	console.log("Gaur");
 	});

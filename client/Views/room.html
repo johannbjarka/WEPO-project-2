@@ -12,7 +12,7 @@
 		<div class="input-group">
 		<input class="input-sm form-control" ng-model="newMessage" type="text">
 		<span class="input-group-btn">
-			<input class="input-sm btn btn-default" type="submit" value="Send">
+			<input class="input-sm btn btn-default" type="text" value="Send">
 		</span>
 		</div>
 	</form>
@@ -39,8 +39,8 @@
 				<div>
 					<label for="privateMsg">Message</label>
 
-					<textarea rows="4" cols="29" id="privateMsg" name="privateMsg" ng-model="privateMsg">
-					</textarea>
+					<input type="text" name="privateMsg" ng-model="privateMsg">
+					</input>
 				</div>
 
 				<div>

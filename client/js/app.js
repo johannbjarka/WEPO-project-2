@@ -237,7 +237,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	socket.on('kicked', function(room, user, username) {
 		if($scope.currentUser === user && $scope.currentRoom === room) {
 			$location.path('/rooms/' + $scope.currentUser);
-			toastr.error('You were kicked from the room', 'Attention!');
+			toastr.warning('You were kicked from the room', 'Attention!');
 		}
 		if($scope.currentUser === username) {
 			var message = 'kicked ' + user + ' from the room.'

@@ -249,11 +249,13 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	});
 
 	$scope.banUser = function (user) {
-		socket.emit('ban', { room: $scope.currentRoom , user: user }, function (success) {
-		});
 		if($scope.receiveName === user){
 			$scope.receiveName = '';
 		}
+		
+		socket.emit('ban', { room: $scope.currentRoom , user: user }, function (success) {
+		});
+
 	};
 
 	socket.on('banned', function(room, user, username) {

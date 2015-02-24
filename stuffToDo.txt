@@ -17,7 +17,7 @@ x  7. Cleara texta úr input eftir að búið er að senda.
 8. Setja hvern component í sér fæl, nota síðan grunt task til að concatenate og minifia.
 9. Setja allt sem þarf í bower.json.
 10. Runna jshint með grunt og fara í gegn án warning.
-11. fixa Þegar notandi sem maður er að chatta við í private chat er kickað BUG.
+x11. fixa Þegar notandi sem maður er að chatta við í private chat er kickað BUG.
 
 Það sem væri töff að gera:
 
@@ -26,3 +26,4 @@ x 2. Geta smellt á notendur á notendalista til að senda PM, showa / hida PM g
 x 3. Hida villu- successskilaboð eftir ákveðinn tíma. 
 x 4. Setja scrollbar á PM og chatglugga
 5. Gera síðuna flottari.
+6. Jquery scroll fyrir chat og PM.

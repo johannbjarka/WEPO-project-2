@@ -145,8 +145,27 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 				}
 			};*/
 			$scope.messages = msgHistory;
+
+			setTimeout(scrollbottom(), 50);
+
 		};
+
+
 	});
+
+	function scrollbottom() {
+		var chatele = $(".scroll");
+
+		var chatheight = chatele.prop("scrollHeight") + 1;
+		$(chatele).scrollTop(chatheight);
+	}
+
+	function scrollbottomPM() {
+		var chatele = $(".scrollPM");
+
+		var chatheight = chatele.prop("scrollHeight");
+		$(chatele).scrollTop(chatheight);
+	}
 
 	$scope.sendMessage = function () {
 		if($scope.newMessage === '') {
@@ -177,6 +196,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 					
 				}	
 				$scope.privateMsg ='';	
+				setTimeout(scrollbottomPM(), 50);
 			});	
 		}
 	};
@@ -222,6 +242,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 				$scope.PMsender = username;
 			}
 			showPM();
+			setTimeout(scrollbottomPM(), 50);
 	});
 
 	$scope.pmReceived = function (PMsender) {

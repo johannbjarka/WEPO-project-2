@@ -4,7 +4,7 @@
 		{{errorMessage}}
 	</div>
 	<div class="well chatbox" id="chat_history">
-		<ul class="list-unstyled chatroom chat" id="txtMultiLine">
+		<ul class="list-unstyled chatroom chat scroll" id="txtMultiLine">
 			<li ng-repeat="message in messages">
 				<span>{{formatTimestamp(message.timestamp)}}</span> &nbsp;&nbsp;&nbsp;&nbsp;
 				<span>{{message.nick}}: </span>&nbsp;&nbsp;
@@ -34,7 +34,7 @@
 					<label for="receiveName">Username</label>
 					<p ng-model="receiveName">{{receiveName}}</p>
 					<div class="well chatbox" id="pmHistory">
-					<ul class="list-unstyled privatemsg">
+					<ul class="scrollPM list-unstyled privatemsg">
 						<li tabindex="1" ng-repeat="pmObj in currentPmHistory">{{pmObj.sender}} - {{pmObj.message}}</li>
 					</ul>
 					</div>
@@ -84,10 +84,4 @@
 		</div>
 	</div>
 	<button type="button" class="btn btn-default" ng-click="leaveRoom()">Leave room</button>
-</div><script type="text/javascript">
-    $(document).ready(function() {
-        $("#scroll").click(function() {
-			console.log("Gaur");
-		});
-    });
-</script>
+</div>

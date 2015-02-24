@@ -17,7 +17,8 @@ x  7. Cleara texta úr input eftir að búið er að senda.
 8. Setja hvern component í sér fæl, nota síðan grunt task til að concatenate og minifia.
 9. Setja allt sem þarf í bower.json.
 10. Runna jshint með grunt og fara í gegn án warning.
-x11. fixa Þegar notandi sem maður er að chatta við í private chat er kickað BUG.
+x 11. fixa Þegar notandi sem maður er að chatta við í private chat er kickað BUG.
+12. Láta vita ef þú færð PM frá öðrum en þeim sem þú ert að spjalla við nú þegar.
 
 Það sem væri töff að gera:
 

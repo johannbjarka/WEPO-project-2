@@ -1,0 +1,23 @@
+{
+  "name": "WEPO-Project-2",
+  "version": "1.0.0",
+  "description": "Web based chat using angular",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johannbjarka/WEPO-project-2.git"
+  },
+  "keywords": [
+    "chat",
+    "angular"
+  ],
+  "author": "Jóhann Örn Bjarkason",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/johannbjarka/WEPO-project-2/issues"
+  },
+  "homepage": "https://github.com/johannbjarka/WEPO-project-2",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.0"
+  }
+}

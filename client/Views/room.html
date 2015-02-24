@@ -34,8 +34,11 @@
 					<label for="receiveName">Username</label>
 					<p ng-model="receiveName">{{receiveName}}</p>
 					<div class="well chatbox" id="pmHistory">
-					<ul class="scrollPM list-unstyled privatemsg">
-						<li tabindex="1" ng-repeat="pmObj in currentPmHistory">{{pmObj.sender}} - {{pmObj.message}}</li>
+					<ul class="scrollPM list-unstyled privatemsg prChat">
+						<li tabindex="1" ng-repeat="pmObj in currentPmHistory">
+						<span>{{pmObj.sender}}:</span>
+						<span>{{pmObj.message}}</span>
+						</li>
 					</ul>
 					</div>
 				</div>
@@ -72,7 +75,7 @@
 				<div class="dropdown menupad" ng-repeat="user in currentUsers | removeCurrentUser" ng-cloak ng-show="currentOp != ''">
 					<div class="btn-group">
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-						Kick <span class="caret"></span>
+						Op actions <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" role="menu">
 						<li><a ng-click="kickUser(user)">Kick</a></li>

@@ -59,7 +59,7 @@ h5 {
 
 .privatemsg {
 	width: 202Px;
-	height: 250px;
+	height: 150px;
 }
 
 .btn-link {
@@ -138,5 +138,10 @@ textarea {
 }
 
 .chat li span:nth-child(2) {
+  font-family: 'Courier New';
+}
+
+.prChat li span:nth-child(1) {
+  font-weight: bold;
   font-family: 'Courier New';
 }

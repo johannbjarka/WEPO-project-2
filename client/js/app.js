@@ -3,7 +3,6 @@ var ChatClient = angular.module('ChatClient', ['ngRoute', 'ngAnimate', 'toastr']
 ChatClient.config(
 	function ($routeProvider) {
 		$routeProvider
-			//.when('/', { templateUrl: 'Views/navigation.html', controller: 'NavigationController'})
 			.when('/login', { templateUrl: 'Views/login.html', controller: 'LoginController' })
 			.when('/rooms/:user/', { templateUrl: 'Views/rooms.html', controller: 'RoomsController' })
 			.when('/room/:user/:room/', { templateUrl: 'Views/room.html', controller: 'RoomController' })
@@ -19,7 +18,7 @@ ChatClient.controller('NavigationController', function ($scope, $location, $root
 
 		});
 		$location.path('/login');
-	}
+	};
 });
 
 ChatClient.controller('LoginController', function ($scope, $location, $rootScope, $routeParams, socket) {
@@ -61,9 +60,9 @@ ChatClient.controller('RoomsController', function ($scope, $location, $rootScope
 				}
 			});
 		}
-	}
+	};
 
-	loadRooms = function() {
+	var loadRooms = function() {
 		socket.on('roomlist', function (data) {
 			var rnames = Object.keys(data);
 			$scope.rooms = rnames;
@@ -71,7 +70,7 @@ ChatClient.controller('RoomsController', function ($scope, $location, $rootScope
 
 		socket.emit('rooms', function () {
 		});
-	}
+	};
 
 	loadRooms();
 });
@@ -113,44 +112,21 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 		}
 	});
 
-	socket.on('servermessage', function (value, room, user) {
-		if(value === 'join' && $scope.currentUser === user) {
-			var message = 'has joined the room.'
-			//socket.emit('sendmsg', { roomName: room, msg: message });
-		}
-	});
-
 	$scope.leaveRoom = function () {
 		socket.emit('partroom', $scope.currentRoom);
         $location.path('/rooms/' + $scope.currentUser);
 	};
 
-	socket.on('servermessage', function (value, room, user) {
-		if(value === 'part') {
-			var message = user + 'has left the room.'
-			//socket.emit('sendmsg', { roomName: room, msg: message });
-		}
-	});
-
 	$scope.hidePMchat = function() {
 		$scope.receiveName = '';
-	}
+	};
 
 	socket.on('updatechat', function (roomName, msgHistory) {
 		if(roomName === $scope.currentRoom) {
-			/*for(var i = 0; i < msgHistory.length; i++) {
-				// Check if we already formatted the timestamp.
-				if(msgHistory[i].timestamp.length > 10) {
-					msgHistory[i].timestamp = formatTimestamp(msgHistory[i].timestamp);
-				}
-			};*/
 			$scope.messages = msgHistory;
 
 			setTimeout(scrollbottom(), 50);
-
-		};
-
-
+		}
 	});
 
 	function scrollbottom() {
@@ -169,7 +145,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 
 	$scope.sendMessage = function () {
 		if($scope.newMessage === '') {
-			//$scope.errorMessage = 'You must write something';
+			// Do nothing.
 		} else {
 			socket.emit('sendmsg', { roomName: $scope.currentRoom, msg: $scope.newMessage });
 		}
@@ -178,7 +154,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 
 	$scope.sendPM = function () {
 		if($scope.privateMsg === '') {
-			//$scope.errorMessage = 'Message can not be blank';
+			// Do nothing.
 		}
 		else {
 			socket.emit('privatemsg', { nick: $scope.receiveName, message: $scope.privateMsg }, function (success) {
@@ -189,11 +165,9 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 						receiver : $scope.receiveName
 					};
 					$scope.pmHistory.push(pmObj);
-					showPM();
-					
+					showPM();					
 				} else {
-					$scope.pmErrorMessage = 'Failed to send PM';
-					
+					$scope.pmErrorMessage = 'Failed to send PM';					
 				}	
 				$scope.privateMsg ='';	
 				setTimeout(scrollbottomPM(), 50);
@@ -202,58 +176,52 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	};
 
 	$scope.pmToUser = function(user) {
-		if($scope.currentUser !== user){
+		if($scope.currentUser !== user) {
 			$scope.receiveName = user;
 			$scope.currentPmHistory = [];
-			for(var i = 0; i < $scope.pmHistory.length; i++)
-			{
+
+			for(var i = 0; i < $scope.pmHistory.length; i++) {
 				if(($scope.currentUser === $scope.pmHistory[i].sender && $scope.receiveName === $scope.pmHistory[i].receiver) || 
-					($scope.currentUser === $scope.pmHistory[i].receiver && $scope.receiveName === $scope.pmHistory[i].sender))
-				{
+					($scope.currentUser === $scope.pmHistory[i].receiver && $scope.receiveName === $scope.pmHistory[i].sender)) {
 					$scope.currentPmHistory.push($scope.pmHistory[i]);
 				}
 			}
 		}
-
 	};
 
-	showPM = function() {
-			$scope.currentPmHistory = [];
-			for(var i = 0; i < $scope.pmHistory.length; i++)
-			{
-				if(($scope.currentUser === $scope.pmHistory[i].sender && $scope.receiveName === $scope.pmHistory[i].receiver) || 
-					($scope.currentUser === $scope.pmHistory[i].receiver && $scope.receiveName === $scope.pmHistory[i].sender))
-				{
-					$scope.currentPmHistory.push($scope.pmHistory[i]);
-				}
+	var showPM = function() {
+		$scope.currentPmHistory = [];
+		for(var i = 0; i < $scope.pmHistory.length; i++) {
+			if(($scope.currentUser === $scope.pmHistory[i].sender && $scope.receiveName === $scope.pmHistory[i].receiver) || 
+				($scope.currentUser === $scope.pmHistory[i].receiver && $scope.receiveName === $scope.pmHistory[i].sender)) {
+				$scope.currentPmHistory.push($scope.pmHistory[i]);
 			}
-
+		}
 	};
 
 	socket.on('recv_privatemsg', function(username, message) {
-			var pmObj = {
-						sender : username,
-						message : message,
-						receiver : $scope.currentUser
-					};
-			$scope.pmHistory.push(pmObj);
-			if($scope.receiveName === '')
-			{
-				$scope.PMsender = username;
-			}
-			showPM();
-			setTimeout(scrollbottomPM(), 50);
+		var pmObj = {
+				sender : username,
+				message : message,
+				receiver : $scope.currentUser
+		};
+		$scope.pmHistory.push(pmObj);
+		if($scope.receiveName === '') {
+			$scope.PMsender = username;
+		}
+		showPM();
+		setTimeout(scrollbottomPM(), 50);
 	});
 
 	$scope.pmReceived = function (PMsender) {
 		$scope.pmToUser(PMsender);
 		$scope.PMsender = '';
-	}
+	};
 
 	$scope.kickUser = function (user) {
 		socket.emit('kick', { room: $scope.currentRoom , user: user }, function (success) {
 		});
-		if($scope.receiveName === user){
+		if($scope.receiveName === user) {
 			$scope.receiveName = '';
 		}
 	};
@@ -264,19 +232,18 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 			toastr.warning('You were kicked from the room', 'Attention!');
 		}
 		if($scope.currentUser === username) {
-			var message = 'kicked ' + user + ' from the room.'
+			var message = 'kicked ' + user + ' from the room.';
 			socket.emit('sendmsg', { roomName: room, msg: message });
 		}
 	});
 
 	$scope.banUser = function (user) {
-		if($scope.receiveName === user){
+		if($scope.receiveName === user) {
 			$scope.receiveName = '';
 		}
 		
 		socket.emit('ban', { room: $scope.currentRoom , user: user }, function (success) {
 		});
-
 	};
 
 	socket.on('banned', function(room, user, username) {
@@ -285,7 +252,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 			toastr.error('You\'ve been banned from the room', 'Attention!');
 		}
 		if($scope.currentUser === username) {
-			var message = 'banned ' + user + ' from the room.'
+			var message = 'banned ' + user + ' from the room.';
 			socket.emit('sendmsg', { roomName: room, msg: message });
 		}
 	});

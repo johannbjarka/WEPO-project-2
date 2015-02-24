@@ -18,7 +18,6 @@
 	</form>
 </div>
 <div class="col-md-3">
-
 	<div class="panel panel-default" ng-cloak ng-show="receiveName != ''">
 		<div class="panel-heading">Send private message</div>
 			<div class="panel-body">
@@ -50,7 +49,6 @@
 			</div>
 	</div>
 </div>
-<button type="button" class="btn btn-default" ng-click="leaveRoom()">Leave room</button>
 <div class="col-md-3">
 	<div class="alert alert-danger" ng-cloak ng-show="PMsender != ''">
 			<button type ="button" class="btn btn-success" ng-click="pmRecevied(PMsender)">{{PMsender}}</button>
@@ -59,33 +57,30 @@
 	<h4>Other users in this room</h4>
 	<div class="well">
 		<div class="row">
-			<div class="col-md-7">
+			<div class="col-md-6">
 				<ul class="list-unstyled">
 					<li ng-repeat="user in currentUsers | removeCurrentUser">
-						<span class ="glyphicon glyphicon-user btn-lg"><button type="button" class="btn btn-link" ng:click="pmToUser(user)" >{{user}}</button></span>
+						<span class ="glyphicon glyphicon-user btn-lg"><button type="button" id="roomUsers" class="btn btn-link" ng:click="pmToUser(user)" >{{user}}</button></span>
 					</li>
 				</ul>
 			</div>
-			<div class="col-md-2 topPad">
-			<div class="dropdown col-md-2 menupad" ng-repeat="user in currentUsers | removeCurrentUser" ng-cloak ng-show="currentOp != ''">
-			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-				
-				<span class="caret"></span>
-			  </button>
-				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-					<li role="presentation">
-						<button role="menuitem" type="button" tabindex="-1" class="btn btn-warning" ng-click="kickUser(user)">Kick</button>
-					</li>
-					<li role="presentation">
-						<button role="menuitem" type="button" tabindex="-1" class="btn btn-danger" ng-click="banUser(user)">Ban</button>
-					</li>
-				</ul>
+			<div class="col-md-6 topPad">
+				<div class="dropdown menupad" ng-repeat="user in currentUsers | removeCurrentUser" ng-cloak ng-show="currentOp != ''">
+					<div class="btn-group">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						Kick <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a ng-click="kickUser(user)">Kick</a></li>
+    					<li><a ng-click="banUser(user)">Ban</a></li>
+					</ul>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<script type="text/javascript">
+	<button type="button" class="btn btn-default" ng-click="leaveRoom()">Leave room</button>
+</div><script type="text/javascript">
     $(document).ready(function() {
         $("#scroll").click(function() {
 			console.log("Gaur");

@@ -44,14 +44,14 @@ h5 {
 
 .chatroom {
     width: 510Px;
-	height: 500px;
+	height: 400px;
 	overflow: auto;
 	
 }
 
 .privatemsg {
 	width: 202Px;
-	height: 250px;
+	height: 150px;
 	overflow: auto;
 }
 
@@ -124,4 +124,12 @@ textarea {
 #roomUsers {
   font-size:large;
   padding-top: 0;
+}
+
+.chat li span:nth-child(1) {
+  font-weight: bold;
+}
+
+.chat li span:nth-child(2) {
+  font-family: 'Courier New';
 }

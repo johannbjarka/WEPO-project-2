@@ -10,7 +10,7 @@ x	2.2. Sýna bara kick og ban takka ef notandi er op í viðkomandi herbergi.
 x  3. Nota moment.js til að birta timestamp í spjallglugga.
 x  4. Útfæra disconnect virkni.
 x  5. Senda msg á room að user hafi disconnectað, hafi verið kickað, bannaður, leavað, joinað.
-	5.1 Virkar, nema fyrir leave.
+x	5.1 Virkar, nema fyrir leave.
 x  6. Tékka á bögg með ops
 x	6.1 Laga bögg með að mörg toast birtast, reyna að finna fleiri bugs.
 x  7. Cleara texta úr input eftir að búið er að senda.
@@ -26,4 +26,5 @@ x 2. Geta smellt á notendur á notendalista til að senda PM, showa / hida PM g
 x 3. Hida villu- successskilaboð eftir ákveðinn tíma. 
 x 4. Setja scrollbar á PM og chatglugga
 5. Gera síðuna flottari.
-6. Jquery scroll fyrir chat og PM.
+x 6. Jquery scroll fyrir chat og PM.
+	Laga off by one.

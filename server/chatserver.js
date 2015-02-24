@@ -58,6 +58,13 @@ io.sockets.on('connection', function (socket) {
 			//Update topic
 			socket.emit('updatetopic', room, rooms[room].topic, socket.username);
 			io.sockets.emit('servermessage', "join", room, socket.username);
+			var messageObj = {
+					nick : 'SERVER',
+					timestamp :  new Date(),
+					message : socket.username + ' has joined the room.'
+			};
+			rooms[room].addMessage(messageObj);
+			io.sockets.emit('updatechat', room, rooms[room].messageHistory);
 		}
 		else {
 
@@ -92,6 +99,13 @@ io.sockets.on('connection', function (socket) {
 				socket.emit('updatechat', room, rooms[room].messageHistory);
 				socket.emit('updatetopic', room, rooms[room].topic, socket.username);
 				io.sockets.emit('servermessage', "join", room, socket.username);
+				var messageObj = {
+						nick : 'SERVER',
+						timestamp :  new Date(),
+						message : socket.username + ' has joined the room.'
+				};
+				rooms[room].addMessage(messageObj);
+				io.sockets.emit('updatechat', room, rooms[room].messageHistory);
 			}
 			fn(false, reason);
 		}
@@ -143,6 +157,13 @@ io.sockets.on('connection', function (socket) {
 		//Update the userlist in the room.
 		io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
 		io.sockets.emit('servermessage', "part", room, socket.username);
+		var messageObj = {
+				nick : 'SERVER',
+				timestamp :  new Date(),
+				message : socket.username + ' has left the room.'
+		};
+		rooms[room].addMessage(messageObj);
+		io.sockets.emit('updatechat', room, rooms[room].messageHistory);
 	});
 
 	// when the user disconnects.. perform this
@@ -159,6 +180,15 @@ io.sockets.on('connection', function (socket) {
 
 			//Broadcast the the user has left the channels he was in.
 			io.sockets.emit('servermessage', "quit", users[socket.username].channels, socket.username);
+			var messageObj = {
+					nick : 'SERVER',
+					timestamp :  new Date(),
+					message : socket.username + ' has disconnected.'
+			};
+			for(var i in users[socket.username].channels) {
+				rooms[i].addMessage(messageObj);
+				io.sockets.emit('updatechat', i, rooms[i].messageHistory);
+			};
 			//Remove the user from the global user roster.
 			delete users[socket.username];
 		}

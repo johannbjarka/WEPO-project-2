@@ -4,8 +4,12 @@
 		{{errorMessage}}
 	</div>
 	<div class="well chatbox" id="chat_history">
-		<ul class="list-unstyled chatroom" id="txtMultiLine">
-			<li ng-repeat="message in messages">{{message.timestamp}} &nbsp;&nbsp;&nbsp;&nbsp;{{message.nick}}: &nbsp;&nbsp; {{message.message}}</li>
+		<ul class="list-unstyled chatroom chat" id="txtMultiLine">
+			<li ng-repeat="message in messages">
+				<span>{{formatTimestamp(message.timestamp)}}</span> &nbsp;&nbsp;&nbsp;&nbsp;
+				<span>{{message.nick}}: </span>&nbsp;&nbsp;
+				<span>{{message.message}}</span>
+			</li>
 		</ul>
 	</div>
 		<form ng-submit="sendMessage()">
@@ -51,7 +55,7 @@
 </div>
 <div class="col-md-3">
 	<div class="alert alert-danger" ng-cloak ng-show="PMsender != ''">
-			<button type ="button" class="btn btn-success" ng-click="pmRecevied(PMsender)">{{PMsender}}</button>
+			<button type ="button" class="btn btn-success" ng-click="pmReceived(PMsender)">{{PMsender}}</button>
 			<p>Just sent you a private message</p>
 	</div>
 	<h4>Other users in this room</h4>

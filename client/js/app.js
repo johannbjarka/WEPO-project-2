@@ -3,7 +3,7 @@ var ChatClient = angular.module('ChatClient', ['ngRoute', 'ngAnimate', 'toastr']
 ChatClient.config(
 	function ($routeProvider) {
 		$routeProvider
-			.when('/', { templateUrl: 'Views/navigation.html', controller: 'NavigationController'})
+			//.when('/', { templateUrl: 'Views/navigation.html', controller: 'NavigationController'})
 			.when('/login', { templateUrl: 'Views/login.html', controller: 'LoginController' })
 			.when('/rooms/:user/', { templateUrl: 'Views/rooms.html', controller: 'RoomsController' })
 			.when('/room/:user/:room/', { templateUrl: 'Views/room.html', controller: 'RoomController' })
@@ -116,7 +116,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	socket.on('servermessage', function (value, room, user) {
 		if(value === 'join' && $scope.currentUser === user) {
 			var message = 'has joined the room.'
-			socket.emit('sendmsg', { roomName: room, msg: message });
+			//socket.emit('sendmsg', { roomName: room, msg: message });
 		}
 	});
 
@@ -126,9 +126,9 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	};
 
 	socket.on('servermessage', function (value, room, user) {
-		if(value === 'part' && $scope.currentUser === user) {
-			var message = 'has left the room.'
-			socket.emit('sendmsg', { roomName: room, msg: message });
+		if(value === 'part') {
+			var message = user + 'has left the room.'
+			//socket.emit('sendmsg', { roomName: room, msg: message });
 		}
 	});
 
@@ -138,12 +138,12 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 
 	socket.on('updatechat', function (roomName, msgHistory) {
 		if(roomName === $scope.currentRoom) {
-			for(var i = 0; i < msgHistory.length; i++) {
+			/*for(var i = 0; i < msgHistory.length; i++) {
 				// Check if we already formatted the timestamp.
 				if(msgHistory[i].timestamp.length > 10) {
 					msgHistory[i].timestamp = formatTimestamp(msgHistory[i].timestamp);
 				}
-			};
+			};*/
 			$scope.messages = msgHistory;
 		};
 	});
@@ -224,7 +224,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 			showPM();
 	});
 
-	$scope.pmRecevied = function (PMsender) {
+	$scope.pmReceived = function (PMsender) {
 		$scope.pmToUser(PMsender);
 		$scope.PMsender = '';
 	}
@@ -273,7 +273,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 		socket.getSocket().removeAllListeners();
 	});
 
-	formatTimestamp = function (ts) {
+	$scope.formatTimestamp = function (ts) {
 		return moment(ts).format('HH:mm');
 	};
 });

@@ -44,14 +44,14 @@ h5 {
 
 .chatroom {
     width: 510Px;
-	height: 550px;
+	height: 500px;
 	overflow: auto;
 	
 }
 
 .privatemsg {
 	width: 202Px;
-	height: 280px;
+	height: 250px;
 	overflow: auto;
 }
 

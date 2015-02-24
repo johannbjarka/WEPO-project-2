@@ -232,6 +232,9 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	$scope.kickUser = function (user) {
 		socket.emit('kick', { room: $scope.currentRoom , user: user }, function (success) {
 		});
+		if($scope.receiveName === user){
+			$scope.receiveName = '';
+		}
 	};
 
 	socket.on('kicked', function(room, user, username) {
@@ -248,6 +251,9 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	$scope.banUser = function (user) {
 		socket.emit('ban', { room: $scope.currentRoom , user: user }, function (success) {
 		});
+		if($scope.receiveName === user){
+			$scope.receiveName = '';
+		}
 	};
 
 	socket.on('banned', function(room, user, username) {

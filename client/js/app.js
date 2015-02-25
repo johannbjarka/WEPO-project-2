@@ -92,6 +92,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	$scope.currentPmHistory = [];
 	$scope.currentOp = '';
 	$scope.topic = '';
+	$scope.topic2 = '';
 
 	socket.on('updateusers', function (roomName, users, ops) {
 		if(roomName === $scope.currentRoom) {
@@ -286,6 +287,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 
 	$scope.setTopic = function (topic) {
 		socket.emit('settopic', { room: $scope.currentRoom , topic: topic });
+		$scope.topic2 = '';
 	};
 
 	socket.on('updatetopic', function(room, topic, username) {

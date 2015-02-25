@@ -91,9 +91,9 @@
 	</div>
 	<button type="button" class="btn btn-default" ng-click="leaveRoom()">Leave room</button>
 
-	<form ng-submit="setTopic(topic)">
+	<form ng-submit="setTopic(topic2)" ng-cloak ng-show="currentOp != ''">
 		<div class="input-group">
-			<input class="input-sm form-control" ng-model="topic" type="text">
+			<input class="input-sm form-control" ng-model="topic2" type="text">
 			<span class="input-group-btn">
 				<input class="input-sm btn btn-default" type="submit" value="Set topic">
 			</span>

@@ -91,11 +91,11 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	$scope.pmHistory = [];
 	$scope.currentPmHistory = [];
 	$scope.currentOp = '';
+	$scope.topic = '';
 
 	socket.on('updateusers', function (roomName, users, ops) {
 		if(roomName === $scope.currentRoom) {
 			$scope.currentUsers = users;
-			console.log(ops[$scope.currentUser]);
 			// Check if current user is an op so we can show op controls in the HTML
 			if(ops[$scope.currentUser] !== undefined) {
 				$scope.currentOp = $scope.currentUser;
@@ -273,22 +273,23 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	});
 
 	$scope.deop = function (user) {
-		console.log("YOLO");
 		socket.emit('deop', { room: $scope.currentRoom , user: user }, function (success) {
-			if(success) {
-				console.log("virkar");
-			} else {
-				console.log("ekki");
-			}
 		});
 	};
 
 	socket.on('deopped', function(room, user, username) {
-		console.log("NOLO");
 		if($scope.currentUser === username) {
 			var message = 'demoted ' + user + ' from being op of ' + room + '.';
 			socket.emit('sendmsg', { roomName: room, msg: message });
 		}
+	});
+
+	$scope.setTopic = function (topic) {
+		socket.emit('settopic', { room: $scope.currentRoom , topic: topic });
+	};
+
+	socket.on('updatetopic', function(room, topic, username) {
+		$scope.topic = topic;
 	});
 
 	$scope.$on('$destroy', function () {

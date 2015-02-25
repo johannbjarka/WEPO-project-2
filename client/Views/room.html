@@ -1,4 +1,5 @@
-<h3>Hi {{currentUser}}, welcome to {{currentRoom}}</h3>
+<h3>{{currentUser}} welcome to {{currentRoom}}</h3>
+<h4 ng-cloak ng-show="topic != ''">Topic: {{topic}}</h4>
 <div class="col-md-6">
 	<div class="alert alert-danger" ng-cloak ng-show="errorMessage != ''">
 		{{errorMessage}}
@@ -13,13 +14,13 @@
 		</ul>
 	</div>
 		<form ng-submit="sendMessage()">
-		<div class="input-group">
-		<input class="input-sm form-control" ng-model="newMessage" type="text">
-		<span class="input-group-btn">
-			<input class="input-sm btn btn-default" type="submit" value="Send">
-		</span>
-		</div>
-	</form>
+			<div class="input-group">
+				<input class="input-sm form-control" ng-model="newMessage" type="text">
+				<span class="input-group-btn">
+					<input class="input-sm btn btn-default" type="submit" value="Send">
+				</span>
+			</div>
+		</form>
 </div>
 <div class="col-md-3">
 	<div class="panel panel-default" ng-cloak ng-show="receiveName != ''">
@@ -89,4 +90,13 @@
 		</div>
 	</div>
 	<button type="button" class="btn btn-default" ng-click="leaveRoom()">Leave room</button>
+
+	<form ng-submit="setTopic(topic)">
+		<div class="input-group">
+			<input class="input-sm form-control" ng-model="topic" type="text">
+			<span class="input-group-btn">
+				<input class="input-sm btn btn-default" type="submit" value="Set topic">
+			</span>
+		</div>
+	</form>
 </div>

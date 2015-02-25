@@ -143,7 +143,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 		if(roomName === $scope.currentRoom) {
 			$scope.messages = msgHistory;
 
-			setTimeout(scrollbottom(), 50);
+			setTimeout(scrollbottom(), 3000);
 		}
 	});
 
@@ -152,14 +152,14 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 
 		var chatheight = chatele.prop("scrollHeight");
 		$(chatele).scrollTop(chatheight);
-	}
+	};
 
 	function scrollbottomPM() {
 		var chatele = $(".scrollPM");
 
 		var chatheight = chatele.prop("scrollHeight");
 		$(chatele).scrollTop(chatheight);
-	}
+	};
 
 	$scope.sendMessage = function () {
 		if($scope.newMessage === '') {
@@ -168,6 +168,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 			socket.emit('sendmsg', { roomName: $scope.currentRoom, msg: $scope.newMessage });
 		}
 		$scope.newMessage ='';
+		setTimeout(scrollbottom(), 1000);
 	};
 
 	$scope.setPassword = function () {

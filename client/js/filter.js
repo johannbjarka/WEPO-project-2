@@ -1,4 +1,5 @@
-ChatClient.filter('removeCurrentUser', function ($routeParams) {
+angular.module("ChatClient").filter('removeCurrentUser', ['$routeParams',
+	function ($routeParams) {
 	var user = $routeParams.user;
 	return function (items) {
 		var filtered = [];
@@ -9,4 +10,4 @@ ChatClient.filter('removeCurrentUser', function ($routeParams) {
 		}
 		return filtered;
 	};
-});
+}]);

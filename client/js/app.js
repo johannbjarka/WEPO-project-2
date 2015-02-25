@@ -47,7 +47,6 @@ ChatClient.controller('RoomsController', function ($scope, $location, $rootScope
 	$scope.currentUser = $routeParams.user;
 	$scope.roomName = '';
 	$scope.errorMessage = '';
-	$scope.password = '';
 
 	$scope.newRoom = function() {
 		if ($scope.roomName === '') {
@@ -74,27 +73,6 @@ ChatClient.controller('RoomsController', function ($scope, $location, $rootScope
 	};
 
 	loadRooms();
-	$scope.joinRoom = function (room) {
-		socket.emit('joinroom', { room: room, pass: $scope.password }, function (success, reason) {
-			if (!success) {
-				if(reason === 'banned') {
-					toastr.error('You have been banned from this room', 'Attention!');
-				}
-				else if(reason === 'wrong password') {
-					var password = prompt('Enter password', "");
-					socket.emit('joinroom', { room: room, pass: password }, function (success, reason) {
-						if(success) {
-							$location.path('/room/' + $scope.currentUser + '/' + room);
-						} else {
-							toastr.error('Wrong password', 'Warning!');
-						}
-					});
-				}
-				// send user back to rooms
-				$location.path('/rooms/' + $scope.currentUser);			
-			}
-		});
-	};
 	
 });
 
@@ -117,6 +95,28 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	$scope.topic = '';
 	$scope.topic2 = '';
 	$scope.password = '';
+
+	socket.emit('joinroom', { room: $scope.currentRoom }, function (success, reason) {
+		if (!success) {
+			if(reason === 'banned') {
+				toastr.error('You have been banned from this room', 'Attention!');
+				// Send user back to rooms.
+				$location.path('/rooms/' + $scope.currentUser);
+			}
+			else if(reason === 'wrong password') {
+				var password = prompt('Enter password', "");
+				socket.emit('joinroom', { room: $scope.currentRoom, pass: password }, function (success, reason) {
+					if(success) {
+						// Do nothing.
+					} else if(reason === 'wrong password') {
+						toastr.error('Wrong password', 'Warning!');
+						// Send user back to rooms
+						$location.path('/rooms/' + $scope.currentUser);
+					} 
+				});
+			}		
+		}
+	});
 
 	socket.on('updateusers', function (roomName, users, ops) {
 		if(roomName === $scope.currentRoom) {
@@ -342,15 +342,3 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 	};
 });
 
-ChatClient.filter('removeCurrentUser', function ($routeParams) {
-	var user = $routeParams.user;
-	return function (items) {
-		var filtered = [];
-		for(var i in items) {
-			if(i !== user) {
-				filtered.push(i);
-			}
-		}
-		return filtered;
-	};
-});

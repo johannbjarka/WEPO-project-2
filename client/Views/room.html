@@ -72,7 +72,7 @@
 					</li>
 				</ul>
 			</div>
-			<div class="col-md-6 topPad">
+			<div class="col-md-offset-2 col-md-4 topPad">
 				<div class="dropdown menupad" ng-repeat="user in currentUsers | removeCurrentUser" ng-cloak ng-show="currentOp != ''">
 					<div class="btn-group">
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -89,9 +89,8 @@
 			</div>
 		</div>
 	</div>
-	<button type="button" class="btn btn-default" ng-click="leaveRoom()">Leave room</button>
 
-	<form ng-submit="setTopic(topic2)" ng-cloak ng-show="currentOp != ''">
+	<form ng-submit="setTopic(topic2)" ng-cloak ng-show="currentOp != ''" class="opActions">
 		<div class="input-group">
 			<input class="input-sm form-control" ng-model="topic2" type="text">
 			<span class="input-group-btn">
@@ -99,13 +98,18 @@
 			</span>
 		</div>
 	</form>
-	<div>
-		<textarea rows="1" cols="10" name="password" ng-model="password"></textarea>
-		<button type="button" class="btn btn-default" ng-click="setPassword()">Set password</button>
+
+	<form ng-submit="setPassword()" ng-cloak ng-show="currentOp != ''" class="opActions">
+		<div class="input-group">
+			<input class="input-sm form-control" ng-model="password" type="text">
+			<span class="input-group-btn">
+				<input class="input-sm btn btn-default" type="submit" value="Set password">
+			</span>
+		</div>
+	</form>
+
+	<div class="opActions">
 		<button type="button" class="btn btn-default" ng-click="leaveRoom()">Leave room</button>
-		<button type="button" class="btn btn-default" ng-click="removePassword()">Remove password</button>
-	</div>
-	<div class="alert alert-danger" ng-cloak ng-show="pwMsg != ''">
-			<p>{{pwMsg}}</p>
+		<button type="button" class="btn btn-default" ng-click="removePassword()" ng-cloak ng-show="currentOp != ''">Remove password</button>
 	</div>
 </div>

@@ -75,11 +75,13 @@
 				<div class="dropdown menupad" ng-repeat="user in currentUsers | removeCurrentUser" ng-cloak ng-show="currentOp != ''">
 					<div class="btn-group">
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-						Op actions <span class="caret"></span>
+						<i class="fa fa-cog"></i> <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" role="menu">
 						<li><a ng-click="kickUser(user)">Kick</a></li>
     					<li><a ng-click="banUser(user)">Ban</a></li>
+    					<li><a ng-click="op(user)">Make op</a></li>
+    					<li><a ng-click="deop(user)">Deop user</a></li>
 					</ul>
 					</div>
 				</div>

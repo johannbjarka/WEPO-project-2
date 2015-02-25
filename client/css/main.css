@@ -145,3 +145,8 @@ textarea {
   font-weight: bold;
   font-family: 'Courier New';
 }
+
+.dropdown-menu li {
+  cursor: pointer; 
+  cursor: hand;
+}

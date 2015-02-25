@@ -99,4 +99,13 @@
 			</span>
 		</div>
 	</form>
+	<div>
+		<textarea rows="1" cols="10" name="password" ng-model="password"></textarea>
+		<button type="button" class="btn btn-default" ng-click="setPassword()">Set password</button>
+		<button type="button" class="btn btn-default" ng-click="leaveRoom()">Leave room</button>
+		<button type="button" class="btn btn-default" ng-click="removePassword()">Remove password</button>
+	</div>
+	<div class="alert alert-danger" ng-cloak ng-show="pwMsg != ''">
+			<p>{{pwMsg}}</p>
+	</div>
 </div>

@@ -2,9 +2,10 @@
 Web based chat application built with AngularJS.
 
 # Installation:
-* With node.js installed, run npm install in the root folder to install grunt and its plugins. 
-* Next run npm install in the server folder to install express and socket.io.
-* After that run bower install in the client folder to install all bower components.
+* With node.js installed, run 'npm install' in the root folder to install grunt and its plugins. 
+* Next run 'npm install' in the server folder to install express and socket.io.
+* After that run 'bower install' in the client folder to install all bower components.
+* In the root folder run 'grunt' to run jshint and create the concatenated and minified version of the javascript code.
 
 # Running the application:
 Having Python 2.7 installed, run start-client.bat and start-server.bat located in the root folder. Then using your browser go to http://localhost:8000/ to use the chat application.

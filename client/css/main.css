@@ -34,9 +34,9 @@ h5 {
 	background-color: rgb(208,204,208);
 }
 
-.scroll,
-.scrollPM {
-	max-height: 500px; 
+.scroll {
+	height: 500px;
+  width: 510Px;
 	overflow-y: scroll; 
 	margin: 0; 
 	padding: 0;
@@ -52,14 +52,12 @@ h5 {
 	margin-top: 5px;
 }
 
-.chatroom {
-  width: 510Px;
-  height: 400px;
-}
-
-.privatemsg {
+.scrollPM {
 	width: 202Px;
 	height: 150px;
+  overflow-y: scroll; 
+  margin: 0; 
+  padding: 0;
 }
 
 .btn-link {

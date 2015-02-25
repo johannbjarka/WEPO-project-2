@@ -4,7 +4,7 @@
 		{{errorMessage}}
 	</div>
 	<div class="well chatbox" id="chat_history">
-		<ul class="list-unstyled chatroom chat scroll" id="txtMultiLine">
+		<ul class="list-unstyled chat scroll" id="txtMultiLine">
 			<li ng-repeat="message in messages">
 				<span>{{formatTimestamp(message.timestamp)}}</span> &nbsp;&nbsp;&nbsp;&nbsp;
 				<span>{{message.nick}}: </span>&nbsp;&nbsp;

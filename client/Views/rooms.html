@@ -2,7 +2,7 @@
 <div class="col-md-12">
 	<div class="well col-md-5">
 		<ul ng-repeat="room in rooms">
-			<li class ="glyphicon glyphicon-share-alt therooms"><a href="#/room/{{currentUser}}/{{room}}">{{room}}</a></li>
+			<li class ="glyphicon glyphicon-share-alt therooms"><a href="#/room/{{currentUser}}/{{room}}" ng:click="joinRoom(room)">{{room}}</a></li>
 		</ul>
 	</div>
 	<div class="col-md-3">

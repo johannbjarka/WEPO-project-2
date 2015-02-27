@@ -143,7 +143,7 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 		if(roomName === $scope.currentRoom) {
 			$scope.messages = msgHistory;
 
-			setTimeout(scrollbottom(), 3000);
+			setTimeout(scrollbottom(), 50);
 		}
 	});
 
@@ -168,7 +168,6 @@ ChatClient.controller('RoomController', function ($scope, $location, $rootScope,
 			socket.emit('sendmsg', { roomName: $scope.currentRoom, msg: $scope.newMessage });
 		}
 		$scope.newMessage ='';
-		setTimeout(scrollbottom(), 1000);
 	};
 
 	$scope.setPassword = function () {

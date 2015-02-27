@@ -148,3 +148,7 @@ textarea {
   cursor: pointer; 
   cursor: hand;
 }
+
+.opActions {
+  margin-top: 0.5em;
+}

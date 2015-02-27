@@ -13,7 +13,7 @@ var users = {};
 
 //Default room.
 rooms.lobby = new Room();
-rooms.lobby.setTopic("Welcome to the lobby!");
+rooms.lobby.setTopic("Politics and religion");
 
 io.sockets.on('connection', function (socket) {
 
